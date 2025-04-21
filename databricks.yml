@@ -1,31 +1,42 @@
-# This is a Databricks asset bundle definition for colibri_digital.
+# This is a Databricks asset bundle definition for DatabricksEDW.
 # See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
 bundle:
   name: colibri_digital
   uuid: 53315f65-465a-4446-908d-03f01eea0417
 
+variables:
+  environment:
+    description: The environment of the run
+  cluster_id:
+    description: Cluster ID
+  development:
+    description: Is DLT development
+  pauseStatus:
+    description: Is pipeline "PAUSED"/"UNPAUSED"
+    
 include:
   - resources/*.yml
 
 targets:
-  dev:
-    # The default target uses 'mode: development' to create a development copy.
-    # - Deployed resources get prefixed with '[dev my_user_name]'
-    # - Any job schedules and triggers are paused by default.
-    # See also https://docs.databricks.com/dev-tools/bundles/deployment-modes.html.
+  development:
     mode: development
     default: true
     workspace:
-      host: https://adb-3068791263256632.12.azuredatabricks.net
+      host: https://adb-4029622200293259.19.azuredatabricks.net
+  
+  # Staging deployment settings
+  staging:
+    workspace:
+      host: https://adb-4029622200293259.19.azuredatabricks.net
+      root_path: /Shared/${var.environment}/
+    run_as:
+      service_principal_name: ""
 
+  # Prod environment deployment settings
   prod:
     mode: production
     workspace:
-      host: https://adb-3068791263256632.12.azuredatabricks.net
-      # We explicitly specify /Workspace/Users/79291362-45dc-482f-bee4-77b544c2b673 to make sure we only have a single copy.
-      root_path: /Workspace/Users/79291362-45dc-482f-bee4-77b544c2b673/.bundle/${bundle.name}/${bundle.target}
-    permissions:
-      - service_principal_name: 79291362-45dc-482f-bee4-77b544c2b673
-        level: CAN_MANAGE
+      host: adb-4029622200293259.19.azuredatabricks.net
+      root_path: /Shared/${var.environment}/
     run_as:
-      service_principal_name: 79291362-45dc-482f-bee4-77b544c2b673
+      service_principal_name: ""
