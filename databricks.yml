@@ -1,0 +1,42 @@
+# This is a Databricks asset bundle definition for DatabricksEDW.
+# See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
+bundle:
+  name: colibri_digital
+  uuid: 53315f65-465a-4446-908d-03f01eea0417
+
+variables:
+  environment:
+    description: The environment of the run
+  cluster_id:
+    description: Cluster ID
+  development:
+    description: Is DLT development
+  pauseStatus:
+    description: Is pipeline "PAUSED"/"UNPAUSED"
+    
+include:
+  - resources/*.yml
+
+targets:
+  development:
+    mode: development
+    default: true
+    workspace:
+      host: https://adb-4029622200293259.19.azuredatabricks.net
+  
+  # Staging deployment settings
+  staging:
+    workspace:
+      host: https://adb-4029622200293259.19.azuredatabricks.net
+      root_path: /Shared/${var.environment}/
+    run_as:
+      service_principal_name: ""
+
+  # Prod environment deployment settings
+  prod:
+    mode: production
+    workspace:
+      host: adb-4029622200293259.19.azuredatabricks.net
+      root_path: /Shared/${var.environment}/
+    run_as:
+      service_principal_name: ""
