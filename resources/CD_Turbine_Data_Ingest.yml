@@ -1,0 +1,11 @@
+resources:
+  jobs:
+    CD_Turbine_Data_Ingest:
+      name: CD_Turbine_Data_Ingest
+      tasks:
+        - task_key: Execute_Python_Notebook
+          notebook_task:
+            notebook_path: /Workspace/Users/ranga.sarangan/colibri-digital/src/01_Load_Transform_Data
+            source: WORKSPACE
+      queue:
+        enabled: true
