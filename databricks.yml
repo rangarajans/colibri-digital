@@ -22,12 +22,12 @@ targets:
     mode: development
     default: true
     workspace:
-      host: https://adb-4029622200293259.19.azuredatabricks.net
+      host: https://adb-xxx.xx.azuredatabricks.net
   
   # Staging deployment settings
   staging:
     workspace:
-      host: https://adb-4029622200293259.19.azuredatabricks.net
+      host: https://adb-xxx.xx.azuredatabricks.net
       root_path: /Shared/${var.environment}/
     run_as:
       service_principal_name: ""
@@ -36,7 +36,7 @@ targets:
   prod:
     mode: production
     workspace:
-      host: adb-4029622200293259.19.azuredatabricks.net
+      host: adb-xxx.xx.azuredatabricks.net
       root_path: /Shared/${var.environment}/
     run_as:
       service_principal_name: ""
